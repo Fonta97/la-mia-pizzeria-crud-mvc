@@ -1,9 +1,19 @@
-namespace la_mia_pizzeria_razor_layout
+using la_mia_pizzeria_crud_mvc.Data;
+
+namespace la_mia_pizzeria_crud_mvc
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            if (PizzaManager.CountAllPizzas() == 0)
+            {
+
+                PizzaManager.InsertPizza()
+
+
+                    }
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
