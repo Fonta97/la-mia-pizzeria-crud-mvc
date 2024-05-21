@@ -25,5 +25,17 @@
             db.Pizzas.Add(pizza);
             db.SaveChanges();
         }
+
+        public static void Seed()
+        {
+            if (PizzaManager.CountAllPizzas() == 0)
+            {
+
+                PizzaManager.InsertPizza(new Pizza("Valtellina", "Rucola, grana, bufala e bresaola", 11.5M));
+                PizzaManager.InsertPizza(new Pizza("Prosciutto e funghi", "La migliore in assoluto", 7.5M));
+                PizzaManager.InsertPizza(new Pizza("Marinara", "Pizza sabbiosa", 8M));
+                PizzaManager.InsertPizza(new Pizza("La Pistacchiosa", "Una SIGNORA PIZZA! - Sdrumox", 15.5M));
+            }
+        }
     }
 }

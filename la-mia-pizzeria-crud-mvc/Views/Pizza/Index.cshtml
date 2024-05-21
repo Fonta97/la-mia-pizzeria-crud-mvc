@@ -1,4 +1,7 @@
-﻿﻿﻿@{
+﻿@using la_mia_pizzeria_crud_mvc.Data
+
+    @model List<Pizza>
+@{
     Layout = null;
 }
 
@@ -11,8 +14,10 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body class="bg">
+
+
     <div class="container-fluid">
-        <h1 class="text-center p-5">Pizzeria da <b>PANKO!</b></h1>
+        <h1 class="text-center p-5">Pizzeria da <b>Fonta!</b></h1>
         <p class="text-center p-3">Scegli la pizza e sarai super satisfied!</p>
         <div class="container">
             <div class="row">
@@ -21,11 +26,12 @@
                     <div class="col-5 col-lg-4 mb-4">
                         <div class="card">
                             <div class="pizze">
-                                <img src="@pizza.Img" alt="@pizza.Name">
+                                
                                 <div class="card-body">
                                     <h5 class="card-title">@pizza.Name</h5>
                                     <p class="card-text">@pizza.Description</p>
-                                    <p class="card-text">Prezzo: €@pizza.Price</p>
+                                    <p class="card-text">Prezzo: €@pizza.Price.ToString("F2")</p>
+                                    <a href="@Url.Action("GetPizza","Pizza", pizza)">SELEZIONA</a>
                                 </div>
                             </div>
                         </div>
@@ -38,6 +44,12 @@
 
 
     <style>
+
+
+        a{
+            text-decoration:none;
+            color: darkslategrey;
+        }
 
         h1 {
             font-family: Broadway, sans-serif;

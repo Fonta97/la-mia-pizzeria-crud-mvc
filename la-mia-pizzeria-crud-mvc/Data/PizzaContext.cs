@@ -4,7 +4,7 @@ namespace la_mia_pizzeria_crud_mvc.Data
 {
     public class PizzaContext : DbContext
     {
-        public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<Pizza>? Pizzas { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

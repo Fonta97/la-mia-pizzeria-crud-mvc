@@ -11,6 +11,10 @@ namespace la_mia_pizzeria_crud_mvc.Data
 
         public string? Image { get; set; }
 
-        public Pizza() { }
+        public Pizza(string name, string description, decimal price) {
+            this.Name = name;
+            this.Description =description;
+            this.Price = price;
+        }
     }
 }

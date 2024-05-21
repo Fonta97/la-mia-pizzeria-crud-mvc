@@ -6,14 +6,6 @@ namespace la_mia_pizzeria_crud_mvc
     {
         public static void Main(string[] args)
         {
-            if (PizzaManager.CountAllPizzas() == 0)
-            {
-
-                PizzaManager.InsertPizza()
-
-
-                    }
-
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -38,7 +30,7 @@ namespace la_mia_pizzeria_crud_mvc
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Pizza}/{action=Index}/{id?}");
 
             app.Run();
         }
