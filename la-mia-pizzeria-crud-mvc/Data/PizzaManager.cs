@@ -9,7 +9,7 @@
         }
         public static List<Pizza> GetAllPizzas()
         {
-            using PizzaContext db= new PizzaContext();
+            using PizzaContext db = new PizzaContext();
             return db.Pizzas.ToList();
         }
 
@@ -25,6 +25,32 @@
             db.Pizzas.Add(pizza);
             db.SaveChanges();
         }
+
+        public static bool UpdatePizza(int id, Pizza pizza)
+        {
+            try
+            {
+                var pizzaDaModificare = GetPizza(id);
+
+                if (pizzaDaModificare == null)
+                    return false;
+
+                pizzaDaModificare.Name = pizza.Name;
+                pizzaDaModificare.Description = pizza.Description;
+                pizzaDaModificare.Price = pizza.Price;
+
+                using PizzaContext db = new PizzaContext();
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
 
         public static void Seed()
         {

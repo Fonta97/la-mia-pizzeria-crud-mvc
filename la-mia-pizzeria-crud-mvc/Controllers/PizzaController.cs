@@ -14,11 +14,13 @@ namespace la_mia_pizzeria_razor_layout.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View(PizzaManager.GetAllPizzas());
         }
 
+        [HttpGet]
         public IActionResult GetPizza(int id)
         {
             var pizza = PizzaManager.GetPizza(id);
@@ -28,6 +30,61 @@ namespace la_mia_pizzeria_razor_layout.Controllers
             else
                 return View("errore");
         }
+
+        [HttpGet]
+        public IActionResult Create() //Restituisce form creazione
+        {
+            Pizza p = new Pizza("Nome di default", "Descrizione base", 66.6M);
+            return View(p);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Pizza pizzaDaInserire)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View("Create", pizzaDaInserire); //ritorno form con i dati della pizza precompilati dallo user
+            }
+
+            PizzaManager.InsertPizza(pizzaDaInserire);
+            return RedirectToAction("Index");
+
+
+        }
+
+        [HttpGet]
+        public IActionResult Update() //update puzza
+        {
+
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Pizza pizzaDaModificare)
+        {
+            if (ModelState.IsValid == false)
+            {
+                return View("Update", pizzaDaModificare); //ritorno form con i dati della pizza precompilati dallo user
+            }
+
+
+            var modified = PizzaManager.UpdatePizza(id, pizzaDaModificare);
+            if (modified)
+            {
+                return RedirectToAction("Index");
+
+            }
+            else
+                return NotFound();
+
+        }
+
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
