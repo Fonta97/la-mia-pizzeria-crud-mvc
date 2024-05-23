@@ -26,18 +26,24 @@
                     <div class="col-5 col-lg-4 mb-4">
                         <div class="card">
                             <div class="pizze">
-                                
+
                                 <div class="card-body">
                                     <h5 class="card-title">@pizza.Name</h5>
                                     <p class="card-text">@pizza.Description</p>
                                     <p class="card-text">Prezzo: €@pizza.Price.ToString("F2")</p>
                                     <a href="@Url.Action("GetPizza","Pizza", pizza)">SELEZIONA</a>
+                                    <a href="@Url.Action("Update","Pizza", pizza)">MODIFICA</a>
+                                    <form asp-controller="Pizza" asp-action="DeletePizza" asp-route-id="@pizza.Id" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit">CANCELLA</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
-                                    <a href="@Url.Action("Create","Pizza")">CREA PIZZA</a>
+                <a href="@Url.Action("Create","Pizza")">CREA PIZZA</a>
             </div>
         </div>
     </div>
@@ -47,8 +53,8 @@
     <style>
 
 
-        a{
-            text-decoration:none;
+        a {
+            text-decoration: none;
             color: darkslategrey;
         }
 

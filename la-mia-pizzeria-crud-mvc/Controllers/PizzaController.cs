@@ -54,10 +54,12 @@ namespace la_mia_pizzeria_razor_layout.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update() //update puzza
+        public IActionResult Update(int id) //update pizza
         {
-
-            return View();
+            var pizza = PizzaManager.GetPizza(id);
+            if (pizza == null)
+                return NotFound();
+            return View(pizza);
         }
 
 
@@ -82,6 +84,24 @@ namespace la_mia_pizzeria_razor_layout.Controllers
                 return NotFound();
 
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePizza(int id)
+        {
+            var deleted = PizzaManager.DeletePizza(id);
+            if (deleted)
+            {
+                return RedirectToAction("Index");
+
+            }
+            else
+                return NotFound();
+
+        }
+
 
 
 
