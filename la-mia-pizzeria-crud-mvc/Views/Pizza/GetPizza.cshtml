@@ -1,7 +1,9 @@
-﻿@using la_mia_pizzeria_crud_mvc.Data
+﻿@using la_mia_pizzeria_crud_mvc.Models
+
 @{
     Layout = null;
 }
+@model Pizza
 
 
 <html>
@@ -20,14 +22,25 @@
                 <div class="card">
                     <div class="pizze">
                         <div class="card-body">
-                            <h5 class="card-title">@Model.Name</h5>
+                            <h3 class="card-title">@Model.Name</h3>
+                            <h4 class="card-title">Categoria: @Model.GetDisplayedCategory() </h4>
+                            @if (Model.Ingredients?.Count > 0)
+                            {
+                                <div class="row"><div class="col"><h4>Ingredienti</h4></div></div>
+                                @foreach (EnvironmentVariablesExtensions ingrediente in Model.Ingredients)
+                                {
+                                    <div class="row"><div class="col"><p class="m-0">@ingrediente.Name</p></div></div>
+                                }
+                            }
                             <p class="card-text">@Model.Description</p>
-                            <p class="card-text">Prezzo: €@Model.Price.ToString("F2")</p>
-                            <a href="@Url.Action("Index")">Torna alla Home</a>
+                            <p class="card-text">
+                                Prezzo: €@Model.Price.ToString("F2")<  /p>
+                                <a href="@Url.Action("Index")">Torna alla Home</a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 </body>
 
 

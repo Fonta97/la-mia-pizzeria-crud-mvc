@@ -1,4 +1,5 @@
 ﻿using la_mia_pizzeria_crud_mvc.Data;
+using la_mia_pizzeria_crud_mvc.Models;
 using la_mia_pizzeria_razor_layout.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -35,19 +36,23 @@ namespace la_mia_pizzeria_razor_layout.Controllers
         public IActionResult Create() //Restituisce form creazione
         {
             Pizza p = new Pizza("Nome di default", "Descrizione base", 66.6M);
-            return View(p);
+            List<Category> categories = PizzaManager.GetAllCategories();
+            PizzaFormModel model = new PizzaFormModel(p, categories);
+            model.CreateIngredients();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza pizzaDaInserire)
+        public IActionResult Create(PizzaFormModel pizzaDaInserire)
         {
             if (ModelState.IsValid == false)
             {
+                pizzaDaInserire.CreateIngredients();
                 return View("Create", pizzaDaInserire); //ritorno form con i dati della pizza precompilati dallo user
             }
 
-            PizzaManager.InsertPizza(pizzaDaInserire);
+            PizzaManager.InsertPizza(pizzaDaInserire.Pizza);
             return RedirectToAction("Index");
 
 
@@ -59,14 +64,15 @@ namespace la_mia_pizzeria_razor_layout.Controllers
             var pizza = PizzaManager.GetPizza(id);
             if (pizza == null)
                 return NotFound();
-            return View(pizza);
+            PizzaFormModel model= new PizzaFormModel(pizza, PizzaManager.GetAllCategories());
+            return View(model);
         }
 
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza pizzaDaModificare)
+        public IActionResult Update(int id, PizzaFormModel pizzaDaModificare)
         {
             if (ModelState.IsValid == false)
             {
@@ -74,7 +80,7 @@ namespace la_mia_pizzeria_razor_layout.Controllers
             }
 
 
-            var modified = PizzaManager.UpdatePizza(id, pizzaDaModificare);
+            var modified = PizzaManager.UpdatePizza(id, pizzaDaModificare.Pizza);
             if (modified)
             {
                 return RedirectToAction("Index");
